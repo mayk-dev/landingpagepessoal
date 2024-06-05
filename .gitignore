@@ -1,2 +1,13 @@
-/node_modules
-/package-lock.json
+# OS generated files #
+######################
+
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.vscode/settings.json
+
+*/.DS_Store
+*.DS_Store
+.DS_Store
