@@ -1,22 +1,44 @@
-.menu {
+.menu { 
+    padding-top: 0;
+    padding-left: 10%;
+    margin top: 0;
+    background-color: rgb(96, 39, 211);
+    width: 100%;
+    height: 50px;
+    
 
 }
-.menu a  {
 
-    fill: blueviolet;
-    width: auto;
-    color: purple;
+.menu a {
+  margin-inline: 100px;
+  padding: 8px;
+  margin-block: 6px;
+  width: 120px;
+  height: 30px;
+  background-color: black;
+  font-size: 22px;
+  text-align: center;
+  color: white;
+  position: inherit
+  
 }
 
-
+body {
+  background-color: rgb(218, 201, 252);
+}
 
 .material-symbols-outlined {
+  padding-top: 10px;
+  color: white;
+  position: inherit;
     width: 20px;
-    height: 20px;
+    height: 20px
+    
   font-variation-settings:
   'FILL' 0,
   'wght' 400,
   'GRAD' 0,
   'opsz' 24
+  
    
 }
