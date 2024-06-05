@@ -1,6 +1,11 @@
 .menu {
 
 }
+.menu a  {
+
+    fill: blueviolet;
+    width: auto;
+}
 
 
 
