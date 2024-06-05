@@ -1,2 +1,3 @@
 # landingpagepessoal
-landingpage pessoal com dados do usuario portfolio e informações basicas
+utf-8
+landingpage pessoal com dados do usuario portfolio e informações basicas 
