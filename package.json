@@ -1,59 +1,29 @@
 {
-  "name": "whatsapp-web.js",
-  "version": "1.23.1-alpha.6",
-  "description": "Library for interacting with the WhatsApp Web API ",
-  "main": "./index.js",
-  "typings": "./index.d.ts",
+  "name": "nodejsvoip",
+  "version": "1.0.0",
+  "description": "voip without webrtc",
+  "main": "server.js",
   "scripts": {
-    "test": "mocha tests --recursive --timeout 5000",
-    "test-single": "mocha",
-    "shell": "node --experimental-repl-await ./shell.js",
-    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pedroslopez/whatsapp-web.js.git"
+    "url": "git+https://github.com/cracker0dks/nodeJsVoip.git"
   },
   "keywords": [
-    "whatsapp",
-    "whatsapp-web",
-    "api",
-    "bot",
-    "client",
-    "node"
+    "voip"
   ],
-  "author": "Pedro Lopez",
-  "license": "Apache-2.0",
+  "author": "cracker0dks",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pedroslopez/whatsapp-web.js/issues"
+    "url": "https://github.com/cracker0dks/nodeJsVoip/issues"
   },
-  "homepage": "https://wwebjs.dev/",
+  "homepage": "https://github.com/cracker0dks/nodeJsVoip#readme",
   "dependencies": {
-    "@pedroslopez/moduleraid": "^5.0.2",
-    "fluent-ffmpeg": "2.1.2",
-    "mime": "^3.0.0",
-    "node-fetch": "^2.6.9",
-    "node-webpmux": "3.1.7",
-    "puppeteer": "^18.2.1"
+    "express": "4.x",
+    "socket.io": "^2.3.0"
   },
-  "devDependencies": {
-    "@types/node-fetch": "^2.5.12",
-    "chai": "^4.3.4",
-    "chai-as-promised": "^7.1.1",
-    "dotenv": "^16.0.0",
-    "eslint": "^8.4.1",
-    "eslint-plugin-mocha": "^10.0.3",
-    "jsdoc": "^3.6.4",
-    "jsdoc-baseline": "^0.1.5",
-    "mocha": "^9.0.2",
-    "sinon": "^13.0.1"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "optionalDependencies": {
-    "archiver": "^5.3.1",
-    "fs-extra": "^10.1.0",
-    "unzipper": "^0.10.11"
-  }
+  "preferGlobal": true,
+  "private": true
 }
