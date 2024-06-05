@@ -1,0 +1,123 @@
+.menu { 
+    padding-top: 0;
+    padding-left: 10%;
+    margin top: 0;
+    background-color: rgb(96, 39, 211);
+    width: 90% ;
+    height:50px ;
+    border-radius:20px 10px;
+
+}
+
+
+  
+  
+
+
+.inicio {
+  margin-inline: 5px;
+  padding: 8px;
+  margin-block: 6px;
+  width: 70px;
+  height: 20px;
+  background-color: rgba(140, 0, 255, 0.884);
+  font-size: 15px;
+  text-align: center;
+  color: white;
+  position: absolute ;
+  border-radius: 25px 2px;
+  top: 10px;
+  left: 50px;
+
+}
+
+.projetos {
+  margin-inline: 5px;
+  padding: 8px;
+  margin-block: 6px;
+  width: 70px;
+  height: 20px;
+  background-color: rgba(140, 0, 255, 0.884);
+  font-size: 15px;
+  text-align: center;
+  color: white;
+  position: absolute ;
+  border-radius: 25px 2px;
+  top: 10px;
+  left: 140px;
+}
+.sobre {
+  margin-inline: 5px;
+  padding: 8px;
+  margin-block: 6px;
+  width: 60px;
+  height: 20px;
+  background-color: rgba(140, 0, 255, 0.884);
+  font-size: 15px;
+  text-align: center;
+  color: white;
+  position: absolute ;
+  border-radius: 25px 2px;
+  top: 10px;
+  left: 230px;
+}
+
+.contato {
+  margin-inline: 5px;
+  padding: 8px;
+  margin-block: 6px;
+  width: 60px;
+  height: 20px;
+  background-color: rgba(140, 0, 255, 0.884);
+  font-size: 15px;
+  text-align: center;
+  color: white;
+  position: absolute ;
+  border-radius: 25px 2px;
+  top: 10px;
+  left: 310px;
+}
+
+body {
+  background-color: rgb(218, 201, 252);
+}
+
+.material-symbols-outlined {
+ 
+  color: white;
+  top: 2%;
+  left: 10px;
+  position: absolute;
+    width: 20px;
+    height: 20px
+    
+   
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 50,
+  
+   
+}
+
+.bordadiv  {
+  width: 201px;
+  height: 200px;
+  color: blueviolet;
+  
+  top: 20%;
+  right: 9%;
+  position: absolute;
+  border-radius: 10PX;
+}
+img {
+  border-radius: 50%;
+}
+
+p {
+  top: 200px;
+  left: 2%;
+  width: 30%;
+  position: absolute;
+}
