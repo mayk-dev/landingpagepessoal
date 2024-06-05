@@ -1,343 +1,177 @@
 <!DOCTYPE html>
-<head>
-    <title>WebRTC Simple Calling API + Mobile</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="css/styles.css" rel="stylesheet" type="text/css">
-</head>
-<body>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+		/>
+		<meta
+			name="description"
+			content="A free, peer-to-peer, encrypted, open-source video calling for the web. No sign ups. No downloads."
+		/>
+		<meta
+			name="keywords"
+			content="group video chat, video communication, multiparty video chat, video chat, webrtc, peer to peer, p2p"
+		/>
+		<meta name="application-name" content="Talk" />
+		<!-- Meta data for link fetching -->
+		<meta property="og:url" content="https://vasanthv.github.io/talk/" />
+		<meta property="og:image" content="https://vasanthv.github.io/talk/icons/icon.png" />
+		<meta property="og:title" content="Talk - Free video calling for the web" />
+		<meta
+			property="og:description"
+			content="A free, peer-to-peer, encrypted, open-source video calling for the web. No sign ups. No downloads."
+		/>
 
-<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-<!-- My Phone Number & Dial Areas -->
-<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-<div class="container">
-    <div class="row">
+		<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+		<link rel="icon" href="icons/favicon.svg" />
+		<link rel="stylesheet" href="styles.css" />
+		<script defer src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+		<script
+			src="https://cdn.socket.io/4.7.5/socket.io.min.js"
+			integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
+			crossorigin="anonymous"
+		></script>
+		<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+		<script defer src="script.js"></script>
+		<script defer src="webrtc.js"></script>
+		<title>Talk - Free video calling for the web</title>
 
-        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-        <!-- MY PHONE NUMBER -->
-        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-        <div class="col-sm-6">
-            <div id="my-number-section" class="text-center">
-                <div id="my-number">LOADING</div>
-                <div id="my-number-title" class="hidden-sm hidden-xs">
-                    this is <strong>your phone number</strong>
-                </div>
-                <div id="my-number-permalink">
-                    <span class="glyphicon glyphicon-link"></span>
-                    call link:
-                    <a id="my-number-link" href="..." target="_blank">https://...</a>
-                </div>
-            </div>
-            <div id="pubnub-chat-section" class="text-center">
-                <input id="pubnub-chat-input" type="text" placeholder="chat here">
-                <div id="pubnub-chat-output"><div></div></div>
-            </div>
-        </div>
+		<!-- ANALYTICS_SCRIPT: Please remove it for your use -->
+		<script async defer src="https://scripts.withcabin.com/hello.js"></script>
+	</head>
 
-        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-        <!-- Video -->
-        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-        <div class="col-sm-6">
-            <!-- DISPLAY -->
-            <div class="row">
-                <div class="col-xs-12 text-center">
-                    <div id="video-border">
-                        <div class="pubnub-relative">
-                            <div id="video-self"></div>
-                        </div>
-                        <div id="video-display">
-                            <span class="glyphicon glyphicon-flash"></span>
-                        </div>
-                    </div>
-                    <div id="pubnub-relative">
-                        <div id="video-thumbnail"></div>
-                        <div id="pubnub-logo">
-                            <div id="pubnub-logo-img"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- DIAL CONTROLS -->
-            <div class="row">
-                <div class="col-sm-6 col-xs-7">
-                    <div class="form-group"><div class="input-group">
-                    <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-th"></span>
-                    </div>
-                    <input id="number" class="form-control" type="number" placeholder="Type Recipient's #">
-                    </div></div>
-                </div>
-                <div class="col-sm-6 col-xs-5 dial-buttons">
-                    <button id="dial" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-earphone"></span>
-                    </button>
-                    <button id="snap" class="btn btn-success">
-                        <span class="glyphicon glyphicon-camera"></span>
-                    </button>
-                    <button id="hangup" class="btn btn-danger">
-                        <span class="glyphicon glyphicon-ban-circle"></span>
-                    </button>                    
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+	<body>
+		<section id="blanket"></section>
+		<section id="videos"></section>
 
-<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
-<!-- WebRTC Peer Connections -->
-<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
-<!-- IMPORTANT: THIS IS AN UNMINIFIED DEVELOPMENT PUBNUB LIBRARY 
-    replace this with the latest versioned, minified CDN lib link before 
-    you deploy your app to a production enviornment.
-    https://github.com/pubnub/javascript#cdn-links
--->
-<script src="https://cdn.pubnub.com/pubnub.js"></script>
+		<main id="app">
+			<div id="appWrap" v-bind:style="'display:block;'">
+				<div id="intro" v-if="!callInitiated && !showChat && !showSettings">
+					<h1>Talk</h1>
+					<p>A free, peer-to-peer, encrypted, open-source video calling for the web.</p>
+					<p>
+						<label for="roomId">Room Id:</label>
+						<input type="text" id="roomId" v-model="roomId" placeholder="Enter a room id" />
+					</p>
+					<p>
+						<label for="yourName">Your name</label>
+						<input type="text" id="yourName" v-model="name" v-on:keyup="updateName" placeholder="Enter your name" />
+					</p>
+					<br />
 
-<!-- WebRTC SDK -->
-<script src="js/webrtc.js"></script>
-<script src="js/sound.js"></script>
-<script>(function(){
+					<div class="footer">
+						<iframe
+							src="https://ghbtns.com/github-btn.html?user=vasanthv&repo=talk&type=star&count=true&size=large"
+							frameborder="0"
+							scrolling="0"
+							width="170"
+							height="30"
+							title="GitHub"
+						></iframe>
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Generate Random Number if Needed
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-var urlargs         = urlparams();
-var my_number       = PUBNUB.$('my-number');
-var my_link         = PUBNUB.$('my-number-link');
-var number          = urlargs.number || Math.floor(Math.random()*999+1);
+						<button v-on:click="initiateCall">Proceed</button>
+					</div>
+				</div>
 
-my_number.number    = number;
-my_number.innerHTML = ''+my_number.number;
-my_link.href        = location.href.split('?')[0] + '?call=' + number;
-my_link.innerHTML   = my_link.href;
+				<div id="callFeedbackWrap" v-if="callEnded">
+					<div id="callFeedback">
+						<div class="bold">Your call has been disconnected. You can now close this window.</div>
+						<br />
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Update Location if Not Set
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-if (!('number' in urlargs)) {
-    urlargs.number = my_number.number;
-    location.href = urlstring(urlargs);
-    return;
-}
+						<div id="feedbackWrap">
+							<div class="question italic">How was the quality of call?</div>
+							<div class="thankYou bold">Thank you for your feedback</div>
+							<div id="feedbackButtons">
+								<button data-cabin-event="call-quality-nah" v-on:click="onCallFeedback">😟<br />Nah!</button>
+								<button data-cabin-event="call-quality-meh" v-on:click="onCallFeedback">😐<br />Meh!</button>
+								<button data-cabin-event="call-quality-yay" v-on:click="onCallFeedback">😀<br />Yay!</button>
+							</div>
+						</div>
+					</div>
+				</div>
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Get URL Params
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-function urlparams() {
-    var params = {};
-    if (location.href.indexOf('?') < 0) return params;
+				<div id="chatWrap" v-if="showChat">
+					<div id="chats" ref="chatContainer">
+						<div class="chat" v-for="(chat, i) in chats" v-bind:key="i">
+							<span class="name">{{chat.name}}</span>
+							<span class="date light"> &middot; {{formatDate(chat.date)}}</span>
+							<div class="message" v-html="linkify(chat.message)"></div>
+						</div>
+						<div id="noChat" class="light" v-if="!chats.length"><small>No chat messages.</small></div>
+					</div>
+					<div id="composeBox">
+						<div id="placeholder" v-if="typing.length <= 0">Type message...</div>
+						<div
+							id="compose"
+							contenteditable="true"
+							v-on:keydown.enter="sendChat"
+							v-on:input="edit($event)"
+							v-on:paste="paste($event)"
+						></div>
+					</div>
+					<small class="light">Press enter to submit</small>
+				</div>
 
-    PUBNUB.each(
-        location.href.split('?')[1].split('&'),
-        function(data) { var d = data.split('='); params[d[0]] = d[1]; }
-    );
+				<div id="settings" v-if="showSettings">
+					<div id="name" class="label">
+						<span>Name:</span>
+						<input type="text" placeholder="Enter your name" v-model="name" v-on:keyup="updateNameAndPublish" />
+					</div>
+					<hr class="separator" />
 
-    return params;
-}
+					<div class="label">Camera 📹</div>
+					<div v-for="(videoDevice, i) in videoDevices" v-bind:key="videoDevice.deviceId">
+						<div
+							v-bind:class="'link indent '+(selectedVideoDeviceId === videoDevice.deviceId ? 'active' : '')"
+							v-on:click="changeCamera(videoDevice.deviceId)"
+						>
+							{{videoDevice.label}}
+						</div>
+					</div>
+					<hr class="separator" />
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Construct URL Param String
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-function urlstring(params) {
-    return location.href.split('?')[0] + '?' + PUBNUB.map(
-        params, function( key, val) { return key + '=' + val }
-    ).join('&');
-}
+					<div class="label">Microphone 🎙️</div>
+					<div v-for="(audioDevice, i) in audioDevices" v-bind:key="audioDevice.deviceId">
+						<div
+							v-bind:class="'link indent '+(selectedAudioDeviceId === audioDevice.deviceId ? 'active' : '')"
+							v-on:click="changeMicrophone(audioDevice.deviceId)"
+						>
+							{{audioDevice.label}}
+						</div>
+					</div>
+					<hr class="separator" />
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Calling & Answering Service
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-var video_out = PUBNUB.$('video-display');
-var img_out   = PUBNUB.$('video-thumbnail');
-var img_self  = PUBNUB.$('video-self');
+					<div class="link" v-on:click="copyURL">{{copyText || "Copy room link"}}</div>
+					<hr class="separator" />
+					<div class="link" v-on:click="toggleSelfVideoMirror">
+						Mirror / Unmirror
+						<small class="light">(self-view)</small>
+					</div>
+				</div>
 
-var phone     = window.phone = PHONE({
-    number        : my_number.number // listen on this line
-,   media         : { video: { width:640, height:480 }, audio: true } // <--- Set Camera Resolution
-,   publish_key   : 'pub-c-561a7378-fa06-4c50-a331-5c0056d0163c'
-,   subscribe_key : 'sub-c-17b7db8a-3915-11e4-9868-02ee2ddab7fe'
-,   secure        : true, ssl: true
-});
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Video Session Connected
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-function connected(session) {
-    video_out.innerHTML = '';
-    video_out.appendChild(session.video);
-
-    PUBNUB.$('number').value = ''+session.number;
-    sounds.play('sound/hi');
-    console.log("Hi!");
-}
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Video Session Ended
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-function ended(session) {
-    clearInterval(thumbnail.ival);
-    thumbnail.ival = 0;
-    set_icon('facetime-video');
-    img_out.innerHTML = '';
-    sounds.play('sound/goodbye');
-    console.log("Bye!");
-}
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Video Session Ended
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-function set_icon(icon) {
-    video_out.innerHTML = '<span class="glyphicon glyphicon-' +
-        icon + '"></span>';
-}
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Start Phone Call
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-function dial(number) {
-    // Hangup an old call
-    phone.hangup();
-
-    // Dial Number
-    var session = phone.dial(number);
-
-    // No Dupelicate Dialing Allowed
-    if (!session) return;
-
-    // Show Connecting Status
-    set_icon('send');
-}
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Ready to Send or Receive Calls
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-phone.ready(function(){
-    // Ready To Call
-    set_icon('facetime-video');
-
-    // Auto Call
-    if ('call' in urlargs) {
-        var number = urlargs['call'];
-        PUBNUB.$('number').value = number;
-        dial(number);
-    }
-
-    // Make a Phone Call
-    PUBNUB.bind( 'mousedown,touchstart', PUBNUB.$('dial'), function(){
-        var number = PUBNUB.$('number').value;
-        if (!number) return;
-        dial(number);
-    } );
-
-    // Hanup Call
-    PUBNUB.bind( 'mousedown,touchstart', PUBNUB.$('hangup'), function() {
-        phone.hangup();
-        set_icon('facetime-video');
-    } );
-
-    // Take Picture
-    PUBNUB.bind( 'mousedown,touchstart', PUBNUB.$('snap'), function() {
-        var photo = phone.snap();
-
-        if (!(photo && photo.image))
-            return console.error(
-                '%c Connect your video with a partner first.',
-                'font-size:30px;background:#f00;color:#fff'
-            );
-
-        img_self.innerHTML = ' ';
-        img_self.appendChild(photo.image);
-        setTimeout( function() { img_self.innerHTML = ' ' }, 750 );
-    } );
-});
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Received Call Thumbnail
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-function thumbnail(session) {
-    img_out.innerHTML = '';
-    img_out.appendChild(session.image);
-    img_out.appendChild(phone.snap().image);
-}
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Receiver for Calls
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-phone.receive(function(session){
-    session.message(message);
-    session.thumbnail(thumbnail);
-    session.connected(connected);
-    session.ended(ended);
-
-    if (!thumbnail.ival)
-        thumbnail.ival = setInterval( () => thumbnail(session), 400 );
-});
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Chat
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-var chat_in  = PUBNUB.$('pubnub-chat-input');
-var chat_out = PUBNUB.$('pubnub-chat-output');
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Send Chat MSG and update UI for Sending Messages
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-PUBNUB.bind( 'keydown', chat_in, function(e) {
-    if ((e.keyCode || e.charCode) !== 13)     return true;
-    if (!chat_in.value.replace( /\s+/g, '' )) return true;
-
-    phone.send({ text : chat_in.value });
-    add_chat( my_number.number + " (Me)", chat_in.value );
-    chat_in.value = '';
-} )
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Update Local GUI
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-function add_chat( number, text ) {
-    if (!text.replace( /\s+/g, '' )) return true;
-
-    var newchat       = document.createElement('div');
-    newchat.innerHTML = PUBNUB.supplant(
-        '<strong>{number}: </strong> {message}', {
-        message : safetxt(text),
-        number  : safetxt(number)
-    } );
-    chat_out.insertBefore( newchat, chat_out.firstChild );
-}
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// WebRTC Message Callback
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-function message( session, message ) {
-    add_chat( session.number, message.text );
-}
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// XSS Prevent
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-function safetxt(text) {
-    return (''+text).replace( /[<>]/g, '' );
-}
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Problem Occured During Init
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-phone.unable(function(details){
-    console.log("Alert! - Reload Page.");
-    console.log(details);
-    set_icon('remove');
-});
-
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Debug Output
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-phone.debug(function(details){
-    console.log(details);
-});
-
-})();</script>
-</body>
+				<div id="actionsWrap" v-if="callInitiated">
+					<div id="actions">
+						<button v-bind:class="'icon-mic'+(audioEnabled ? '' : '-off')" v-on:click="audioToggle"></button>
+						<button v-bind:class="'icon-video'+(videoEnabled ? '' : '-off')" v-on:click="videoToggle"></button>
+						<button
+							v-bind:class="'icon-message-square '+(showChat ? 'active' : '')"
+							v-on:click="showChat = !showChat"
+						></button>
+						<button
+							v-if="!isMobileDevice"
+							v-bind:class="'icon-monitor '+(screenShareEnabled ? 'active' : '')"
+							v-on:click="screenShareToggle"
+						></button>
+						<button v-bind:class="'icon-exit'" v-on:click="exit"></button>
+						<button
+							v-bind:class="'icon-more-horizontal '+(showSettings ? 'active' : '')"
+							v-on:click="showSettings = !showSettings"
+						></button>
+					</div>
+				</div>
+			</div>
+		</main>
+	</body>
 </html>
