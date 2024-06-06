@@ -2,11 +2,10 @@
     padding-top: 0;
     padding-left: 10%;
     margin top: 0;
-    background-color: rgb(96, 39, 211);
-    width: 90% ;
+    background: linear-gradient(30deg , #2902293b), rgb(37, 2, 48) , rgb(63, 3, 141),rgb(67, 0, 122);
     height:50px ;
     border-radius:20px 10px;
-
+  
 }
 
 
@@ -20,7 +19,7 @@
   margin-block: 6px;
   width: 70px;
   height: 20px;
-  background: linear-gradient(30deg , #2902293b), rgb(37, 2, 48) , rgb(63, 3, 141),rgb(67, 0, 122);
+  background: color rgb(67, 0, 122);
   font-size: 15px;
   text-align: center;
   color: white;
