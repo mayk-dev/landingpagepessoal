@@ -79,7 +79,7 @@
 }
 
 body {
-  background-color: rgb(218, 201, 252);
+  background: linear-gradient(45deg, #fff,#f30909,#5708e9,#4ef501,#290404);
 }
 
 .material-symbols-outlined {
