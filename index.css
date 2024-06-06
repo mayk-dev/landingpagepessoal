@@ -20,7 +20,7 @@
   margin-block: 6px;
   width: 70px;
   height: 20px;
-  background-color: rgba(140, 0, 255, 0.884);
+  background: linear-gradient(30deg , #2902293b), rgb(37, 2, 48) , rgb(63, 3, 141),rgb(67, 0, 122);
   font-size: 15px;
   text-align: center;
   color: white;
@@ -79,8 +79,7 @@
 }
 
 body {
-  background: linear-gradient(45deg, #fff,#f30909,#5708e9,#4ef501,#290404);
-  background-repeat: no-repeat;
+  background-color: rgb(218, 201, 252);
 }
 
 .material-symbols-outlined {
