@@ -12,8 +12,8 @@
 }
 
 body {
-    background: url("../images/background.png");
-    color: #2e0069;
+    background-color: black;
+    color: #00ff00;
 }
 
 .container {
