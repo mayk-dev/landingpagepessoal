@@ -80,6 +80,7 @@
 
 body {
   background: linear-gradient(45deg, #fff,#f30909,#5708e9,#4ef501,#290404);
+  background-repeat: no-repeat;
 }
 
 .material-symbols-outlined {
