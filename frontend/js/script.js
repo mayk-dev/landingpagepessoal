@@ -104,9 +104,6 @@ const sendMessage = (event) => {
     chatInput.value = ""
 }
 
-loginForm.addEventListener("submit", handleLogin , logadocomsucesso)
+loginForm.addEventListener("submit", handleLogin , )
 chatForm.addEventListener("submit", sendMessage)
 
-function logadocomsucesso {
-    console.log("logado com sucesso")
-}
