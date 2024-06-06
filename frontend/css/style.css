@@ -155,3 +155,10 @@ body {
     font-weight: 700;
     color: rgb(0, 255, 64);
 }
+
+.foot {
+    align-items: center;
+    text-align: center;
+    color: #00ff40;
+    
+}
