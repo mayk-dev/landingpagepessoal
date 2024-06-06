@@ -136,7 +136,7 @@ body {
 }
 
 .message--self {
-    background-color: #000000;
+    background-color: #636363;
     color: #00ff22;
     border-radius: 10px 10px 0 10px;
     align-self: flex-end;
