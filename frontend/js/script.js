@@ -18,6 +18,8 @@ const colors = [
     "gold"
 ]
 
+
+
 const user = { id: "", name: "", color: "" }
 
 let websocket
@@ -102,5 +104,9 @@ const sendMessage = (event) => {
     chatInput.value = ""
 }
 
-loginForm.addEventListener("submit", handleLogin)
+loginForm.addEventListener("submit", handleLogin , logadocomsucesso)
 chatForm.addEventListener("submit", sendMessage)
+
+function logadocomsucesso {
+    console.log("logado com sucesso")
+}
