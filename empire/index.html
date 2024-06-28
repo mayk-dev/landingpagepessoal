@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat em Tempo Real</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script>
+    $(document).ready(function() {
+        // Função para carregar mensagens iniciais
+        function loadMessages() {
+            $.ajax({
+                url: 'get_messages.php',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // Exibir mensagens na interface
+                    data.forEach(function(message) {
+                        if (message.message.startsWith('audio_')) {
+                            var audioUrl = 'uploads/' + message.message.substr(6); // Caminho do arquivo de áudio
+                            $('#messages').append('<div><strong>User ' + message.user_id + '</strong>: <audio controls><source src="' + audioUrl + '" type="audio/mpeg">Your browser does not support the audio element.</audio></div>');
+                        } else {
+                            $('#messages').append('<div><strong>User ' + message.user_id + '</strong>: ' + message.message + '</div>');
+                        }
+                    });
+                }
+            });
+        }
+
+        // Carregar mensagens inicialmente
+        loadMessages();
+
+        // Função para enviar mensagem de texto ou áudio
+        $('#send_message').click(function() {
+            var user_id = 1; // ID do usuário logado
+            var message = $('#message').val();
+
+            if (message.trim() === '') {
+                return;
+            }
+
+            // Verificar se é um arquivo de áudio
+            if ($('#audio_file')[0].files.length > 0) {
+                var formData = new FormData();
+                formData.append('user_id', user_id);
+                formData.append('audio_file', $('#audio_file')[0].files[0]);
+
+                $.ajax({
+                    url: 'insert_audio.php',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function() {
+                        $('#message').val('');
+                        $('#audio_file').val('');
+                        loadMessages(); // Recarregar mensagens após envio
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: 'insert_message.php',
+                    type: 'POST',
+                    data: { user_id: user_id, message: message },
+                    success: function() {
+                        $('#message').val('');
+                        loadMessages(); // Recarregar mensagens após envio
+                    }
+                });
+            }
+        });
+    });
+    </script>
+    <style>
+    .mic-icon {
+        font-size: 24px;
+        vertical-align: middle;
+    }
+    </style>
+</head>
+<body>
+    <div id="messages"></div>
+    <input type="text" id="message" placeholder="Digite sua mensagem...">
+    <input type="file" id="audio_file" accept="audio/*">
+    <button id="send_message"><i class="material-icons mic-icon">mic</i></button>
+</body>
+</html>
