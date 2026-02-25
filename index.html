@@ -1,43 +1,275 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MaykDev</title>
-    <link rel="stylesheet" href="index.css">    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-</head>
-<header>
-    
-    <nav class="menu">
-        <span class="material-symbols-outlined">
-            
-            </span>
-        <a class="inicio" href="#inicio" id="inicio">inicio</a>
-        <a class="projetos" href="#">Projetos</a>
-        <a class="sobre" href="#">Sobre</a>
-        <a class="contato" href="#">Contatos</a>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tabela de Preços</title>
 
-    </nav>
-</header>
+  <style>
+    :root {
+      --bg: #0f1220;
+      --card: #151a33;
+      --muted: #a9b0ff;
+      --text: #eef1ff;
+      --border: #2a2f5a;
+      --thead: #1b2047;
+      --price: #7CFFB2;
+      --footer: #0b0e1a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      margin: 0 0 6px;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      margin: 6px 0 10px;
+    }
+
+    .table-wrap {
+      display: block;
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+
+    thead th {
+      background: var(--thead);
+      padding: 10px;
+      font-size: 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody td {
+      padding: 10px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    ul { margin: 0; padding-left: 18px; }
+    li { margin: 4px 0; }
+
+    .price {
+      font-weight: bold;
+      color: var(--price);
+      white-space: nowrap;
+    }
+
+    .mobile {
+      display: none;
+      gap: 10px;
+    }
+
+    .plan {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #121531;
+    }
+
+    .plan h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    footer {
+      margin-top: 24px;
+      padding: 16px 10px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: var(--footer);
+      border-top: 1px solid var(--border);
+      border-radius: 12px 12px 0 0;
+    }
+
+    @media (max-width: 820px) {
+      .table-wrap { display: none; }
+      .mobile { display: grid; }
+      table { min-width: 100%; }
+    }
+  </style>
+</head>
 
 <body>
-    <main>
-        <h1>
-            <audio controls="true">
-                
-            </audio>
-            Sobre Mim
-            
-        </h1>
-       
-        <P>
-           
-            Sou um desenvolvedor Full-Stack com ampla experiência em desenvolvimento Front-End e Back-End, dedicado a criar experiências digitais incríveis. Com um sólido background em tecnologia e um compromisso com a excelência, estou aqui para transformar suas ideias em realidade digital.        </P>
-     <div class="bordadiv">
-        <a><img src="fotolinkedin.jpeg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo, quod sequi mollitia illo ducimus quis tempore fugiat rerum dolor esse delectus inventore optio, provident maiores quos itaque veniam sed tempora! </a>
-     </div>
+  <div class="container">
+    <header>
+      <h1>Tabela de Preços</h1>
+      <p>Valores estimados. Podem variar conforme o escopo.</p>
+    </header>
 
+    <section class="card">
+      <h2>Planos</h2>
 
-    </main>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Plano</th>
+              <th>Indicado para</th>
+              <th>Serviços Inclusos</th>
+              <th>Prazo</th>
+              <th>Preço</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Básico</b></td>
+              <td>Divulgação simples / portfólio</td>
+              <td>
+                <ul>
+                  <li>1 landing page responsiva</li>
+                  <li>Formulário (e-mail/WhatsApp)</li>
+                  <li>Design simples</li>
+                  <li>SEO básico</li>
+                  <li>Publicação no servidor</li>
+                </ul>
+              </td>
+              <td>3 a 5 dias</td>
+              <td class="price">R$ 500 – R$ 900</td>
+            </tr>
+
+            <tr>
+              <td><b>Profissional</b></td>
+              <td>Captação de leads / vendas</td>
+              <td>
+                <ul>
+                  <li>Tudo do Básico</li>
+                  <li>Integração com WhatsApp</li>
+                  <li>Integração com e-mail marketing</li>
+                  <li>Google Analytics + Pixel</li>
+                  <li>Otimização de conversão (layout)</li>
+                </ul>
+              </td>
+              <td>5 a 7 dias</td>
+              <td class="price">R$ 1.200 – R$ 2.500</td>
+            </tr>
+
+            <tr>
+              <td><b>Premium</b></td>
+              <td>Funil de vendas / campanhas</td>
+              <td>
+                <ul>
+                  <li>Tudo do Profissional</li>
+                  <li>Design personalizado (UI/UX)</li>
+                  <li>Integração com CRM</li>
+                  <li>Checkout / Pagamento</li>
+                  <li>Automações de e-mail</li>
+                  <li>Teste A/B</li>
+                  <li>Heatmap e métricas</li>
+                </ul>
+              </td>
+              <td>7 a 12 dias</td>
+              <td class="price">R$ 2.800 – R$ 5.500+</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mobile">
+        <div class="plan">
+          <h3>Básico</h3>
+          <div class="meta"><span>Prazo: 3–5 dias</span><span class="price">R$ 500 – R$ 900</span></div>
+          <ul>
+            <li>1 landing page responsiva</li>
+            <li>Formulário (e-mail/WhatsApp)</li>
+            <li>Design simples</li>
+            <li>SEO básico</li>
+            <li>Publicação no servidor</li>
+          </ul>
+        </div>
+
+        <div class="plan">
+          <h3>Profissional</h3>
+          <div class="meta"><span>Prazo: 5–7 dias</span><span class="price">R$ 1.200 – R$ 2.500</span></div>
+          <ul>
+            <li>Tudo do Básico</li>
+            <li>Integração com WhatsApp</li>
+            <li>Integração com e-mail marketing</li>
+            <li>Google Analytics + Pixel</li>
+            <li>Otimização de conversão (layout)</li>
+          </ul>
+        </div>
+
+        <div class="plan">
+          <h3>Premium</h3>
+          <div class="meta"><span>Prazo: 7–12 dias</span><span class="price">R$ 2.800 – R$ 5.500+</span></div>
+          <ul>
+            <li>Tudo do Profissional</li>
+            <li>Design personalizado (UI/UX)</li>
+            <li>Integração com CRM</li>
+            <li>Checkout / Pagamento</li>
+            <li>Automações de e-mail</li>
+            <li>Teste A/B</li>
+            <li>Heatmap e métricas</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    © 2022/2026 – Todos os Direitos Reservados | Mayk Celestino
+  </footer>
+
 </body>
 </html>
