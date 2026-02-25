@@ -15,6 +15,7 @@
       --thead: #1b2047;
       --price: #7CFFB2;
       --footer: #0b0e1a;
+      --zap: #25D366;
     }
 
     * { box-sizing: border-box; }
@@ -43,16 +44,8 @@
       margin-bottom: 12px;
     }
 
-    header h1 {
-      font-size: 1.4rem;
-      margin: 0 0 6px;
-    }
-
-    header p {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin: 0;
-    }
+    header h1 { font-size: 1.4rem; margin: 0 0 6px; }
+    header p { color: var(--muted); font-size: 0.9rem; margin: 0; }
 
     .card {
       background: var(--card);
@@ -62,10 +55,7 @@
       margin-bottom: 12px;
     }
 
-    h2 {
-      font-size: 1.1rem;
-      margin: 6px 0 10px;
-    }
+    h2 { font-size: 1.1rem; margin: 6px 0 10px; }
 
     .table-wrap {
       display: block;
@@ -104,10 +94,7 @@
       white-space: nowrap;
     }
 
-    .mobile {
-      display: none;
-      gap: 10px;
-    }
+    .mobile { display: none; gap: 10px; }
 
     .plan {
       border: 1px solid var(--border);
@@ -116,10 +103,7 @@
       background: #121531;
     }
 
-    .plan h3 {
-      margin: 0 0 6px;
-      font-size: 1rem;
-    }
+    .plan h3 { margin: 0 0 6px; font-size: 1rem; }
 
     .meta {
       display: flex;
@@ -142,10 +126,46 @@
       border-radius: 12px 12px 0 0;
     }
 
+    /* === WHATSAPP FLOAT === */
+    #zap-float {
+      position: fixed;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 50px;
+      background: #121531;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px rgba(0,0,0,.4);
+      transform: translateX(-150%);
+      opacity: 0;
+      transition: all .6s cubic-bezier(.22,.61,.36,1);
+      pointer-events: none;
+    }
+
+    #zap-float.show {
+      transform: translateX(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #zap-float img { width: 34px; height: 34px; }
+
+    #zap-float span {
+      color: var(--text);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
     @media (max-width: 820px) {
       .table-wrap { display: none; }
       .mobile { display: grid; }
       table { min-width: 100%; }
+    }
+
+    @media (max-width: 600px) {
+      #zap-float span { display: none; }
     }
   </style>
 </head>
@@ -268,8 +288,50 @@
   </div>
 
   <footer>
-    © 2022/2026 – Todos os Direitos Reservados | Mayk Celestino
+    © 2026 – Todos os Direitos Reservados | Mayk Nascimento Celestino
   </footer>
 
+  <!-- BOTÃO WHATSAPP -->
+  <a 
+    id="zap-float" 
+    href="https://wa.me/5571983368735?text=Pode%20me%20chamar%20no%20ZAP%20brother!" 
+    target="_blank"
+  >
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+    <span>pode me chamar no ZAP brother !</span>
+  </a>
+
+  <script>
+    function randomPosition() {
+      const margin = 20;
+      const maxX = window.innerWidth - 220;
+      const maxY = window.innerHeight - 80;
+
+      const x = Math.floor(Math.random() * maxX);
+      const y = Math.floor(Math.random() * maxY);
+
+      return { x: Math.max(margin, x), y: Math.max(margin, y) };
+    }
+
+    function spawnZap() {
+      const zap = document.getElementById("zap-float");
+      const pos = randomPosition();
+
+      zap.classList.remove("show");
+
+      setTimeout(() => {
+        zap.style.left = pos.x + "px";
+        zap.style.top = pos.y + "px";
+        zap.classList.add("show");
+      }, 400);
+
+      setTimeout(() => {
+        zap.classList.remove("show");
+      }, 7000);
+    }
+
+    spawnZap();
+    setInterval(spawnZap, 15000);
+  </script>
 </body>
 </html>
