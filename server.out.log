@@ -1,0 +1,8 @@
+Servidor rodando em http://localhost:3000
+Modelo padrão: openrouter/free
+Piper TTS será servido em http://127.0.0.1:32123
+[piper] baixando voz pt_BR-faber-medium em C:\Users\RENATA GOSTOSINHA\Documents\Codex\2026-05-09\usando-a-api-do-openrouter-crie\piper-models
+[piper] piper pronto em http://127.0.0.1:32123 com voz pt_BR-faber-medium
+[piper] 127.0.0.1 - "GET /health HTTP/1.1" 200 -
+[piper] 127.0.0.1 - "POST /synthesize HTTP/1.1" 200 -
+[piper] 127.0.0.1 - "POST /synthesize HTTP/1.1" 200 -

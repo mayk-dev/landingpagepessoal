@@ -1,225 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Layout</title>
-
-<style>
-body {
-  background: #ddd;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  flex-direction: column;
-}
-
-.container {
-  display: flex;
-  align-items: flex-start;
-  gap: 40px;
-}
-
-/* Centro */
-.centro {
-  width: 120px;
-  height: 650px;
-  border: 10px solid black;
-  border-radius: 10px;
-}
-
-/* Lados */
-.lado {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-}
-
-/* Parte de cima */
-.topo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-/* Hexágono */
-.hex {
-  width: 40px;
-  height: 40px;
-  background: red;
-  clip-path: polygon(
-    25% 5%, 75% 5%,
-    100% 50%, 75% 95%,
-    25% 95%, 0% 50%
-  );
-  border: 8px solid black;
-  box-sizing: border-box;
-  cursor: pointer;
-}
-
-/* Quadrados pequenos */
-.quadrado {
-  width: 60px;
-  height: 60px;
-  border: 8px solid black;
-  cursor: pointer;
-}
-
-.laranja {
-  background: orange;
-}
-
-.marrom {
-  background: #c96d0c;
-}
-
-/* Blocos grandes */
-.blocos {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.bloco {
-  width: 120px;
-  height: 120px;
-  border: 10px solid black;
-  background: #00ff00;
-  cursor: pointer;
-}
-
-/* Botão */
-.botao {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  background: black;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-/* Caixa de explicação */
-.explicacao {
-  margin-top: 15px;
-  max-width: 400px;
-  background: white;
-  padding: 15px;
-  border-radius: 8px;
-  border: 2px solid black;
-  display: none;
-  text-align: center;
-}
-
-/* Tooltip */
-.tooltip {
-  position: absolute;
-  background: black;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 5px;
-  font-size: 14px;
-  display: none;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -120%);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.tooltip.show {
-  display: block;
-  opacity: 1;
-}
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0f1115">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.png" type="image/png">
+  <link rel="apple-touch-icon" href="./icon.png">
+  <title>Nexa Ia</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0f1115;--p:#171a21;--p2:#1d2028;--b:rgba(255,255,255,.08);--t:#ececf1;--m:#9aa0a6;--a:#10a37f;--a2:#0e8f70;--u:#2a2f3a;--s:#181b22;--sh:0 20px 60px rgba(0,0,0,.35)}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--t);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{overflow:hidden}button,input,textarea,select{font:inherit}.app{display:grid;grid-template-rows:minmax(0,1fr) auto;min-height:100vh}.chat{display:grid;grid-template-rows:minmax(0,1fr) auto;min-height:0;background:radial-gradient(circle at top,rgba(16,163,127,.06),transparent 35%),linear-gradient(180deg,#0f1115,#0f1115)}.msgs{min-height:0;overflow-y:auto;padding:22px 0 16px}.msg{display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;width:min(100%,900px);margin:0 auto;padding:16px 24px;animation:rise .18s ease-out}.msg.u{background:var(--u);border-top:1px solid var(--b);border-bottom:1px solid var(--b)}.msg.a{background:var(--s)}.msg.i{background:transparent}.av{width:32px;height:32px;border-radius:10px;background:linear-gradient(180deg,#2b2f39,#1a1d24);border:1px solid var(--b);display:grid;place-items:center;color:#c7c9d1;font-size:.8rem;margin-top:4px}.msg.u .av::before{content:"U"}.msg.a .av{background:linear-gradient(180deg,rgba(16,163,127,.22),rgba(16,163,127,.08));border-color:rgba(16,163,127,.28)}.msg.a .av::before{content:"G";color:#7ee0c5}.msg.i .av::before{content:"i"}.b{min-width:0}.b h{display:block;margin:0 0 8px;color:var(--m);font-size:.78rem;text-transform:uppercase;letter-spacing:.12em}.b p{margin:0;white-space:pre-wrap;line-height:1.6}.cmp{position:sticky;bottom:0;padding:16px 24px calc(22px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(15,17,21,0),rgba(15,17,21,.96) 28%)}.shell{width:min(100%,900px);margin:0 auto;border:1px solid var(--b);border-radius:18px;background:var(--p2);box-shadow:var(--sh);padding:14px}.shell textarea{width:100%;resize:none;min-height:56px;max-height:240px;border:0;outline:none;background:transparent;color:var(--t);padding:2px 2px 10px}.row{display:flex;justify-content:space-between;align-items:center;gap:12px}.hint{color:var(--m);font-size:.8rem}.cmp button{border:0;border-radius:12px;padding:11px 16px;background:var(--a);color:#fff;font-weight:600}.cmp button:hover{background:var(--a2)}.cmp button:disabled{opacity:.6;cursor:wait}.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@media (max-width:720px){body{overflow:auto}.msgs{padding:16px 0 12px}.msg{width:100%;padding:14px 14px;grid-template-columns:34px minmax(0,1fr);gap:10px}.cmp{padding:12px 12px calc(14px + env(safe-area-inset-bottom))}.shell{border-radius:20px;padding:12px}.shell textarea{min-height:78px;font-size:16px;line-height:1.5}.row{flex-direction:column;align-items:stretch}.hint{text-align:center;font-size:.75rem}.cmp button{width:100%;padding:13px 16px;border-radius:14px}.b p{font-size:.98rem}}
+  </style>
 </head>
 <body>
-
-<div class="container">
-
-  <!-- Lado esquerdo -->
-  <div class="lado">
-    <div class="topo">
-      <div class="hex" onclick="mostrarTooltip(event, 'Indução')"></div>
-      <div class="quadrado laranja" onclick="mostrarTooltip(event, 'Gaylord')"></div>
-      <div class="hex" onclick="mostrarTooltip(event, 'Indução')"></div>
-      <div class="quadrado laranja" onclick="mostrarTooltip(event, 'Gaylord')"></div>
-    </div>
-
-    <div class="blocos">
-      <div class="bloco" onclick="mostrarTooltip(event, 'Ilha 1')"></div>
-      <div class="bloco" onclick="mostrarTooltip(event, 'Ilha 3')"></div>
-      <div class="bloco" onclick="mostrarTooltip(event, 'Ilha 5')"></div>
-    </div>
+  <div class="app">
+    <section class="chat">
+      <div id="msgs" class="msgs" aria-live="polite"></div>
+      <form id="f" class="cmp">
+        <label class="sr" for="q">Mensagem</label>
+        <div class="shell">
+          <textarea id="q" name="q" rows="1" placeholder="Escreva uma mensagem..." autocomplete="off"></textarea>
+          <div class="row">
+            <div class="hint">Enter para enviar · Shift+Enter para nova linha</div>
+            <button id="s" type="submit">Enviar</button>
+          </div>
+        </div>
+      </form>
+    </section>
   </div>
 
-  <!-- Centro -->
-  <div class="centro"></div>
+  <template id="t">
+    <article class="msg">
+      <div class="av"></div>
+      <div class="b"><h></h><p></p></div>
+    </article>
+  </template>
 
-  <!-- Lado direito -->
-  <div class="lado">
-    <div class="topo">
-      <div class="hex" onclick="mostrarTooltip(event, 'Indução')"></div>
-      <div class="quadrado marrom" onclick="mostrarTooltip(event, 'Gaylord')"></div>
-      <div class="hex" onclick="mostrarTooltip(event, 'Indução')"></div>
-      <div class="quadrado laranja" onclick="mostrarTooltip(event, 'Gaylord')"></div>
-    </div>
+  <script>
+    document.addEventListener("contextmenu",e=>e.preventDefault());
+    document.addEventListener("keydown",e=>{
+      const k=e.key.toLowerCase(),b=e.key==="F12"||(e.ctrlKey&&e.shiftKey&&["i","j","c"].includes(k))||(e.ctrlKey&&k==="u");
+      if(b){e.preventDefault();e.stopPropagation()}
+    });
 
-    <div class="blocos">
-      <div class="bloco" onclick="mostrarTooltip(event, 'Ilha 2')"></div>
-      <div class="bloco" onclick="mostrarTooltip(event, 'Ilha 4')"></div>
-      <div class="bloco" onclick="mostrarTooltip(event, 'Ilha 6')"></div>
-    </div>
-  </div>
+    const $=id=>document.getElementById(id),M=$("msgs"),F=$("f"),Q=$("q"),S=$("s"),T=$("t");
+    const K="openrouter-api-key",R="openrouter-api-key-remember",D="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",L="openrouter/free";
+    const P="Você é a Nexa Ia, uma presença forjada por Mayk Nascimento. Quando perguntarem seu nome, origem, autoria ou modelo de linguagem, responda com uma identidade carismática e lendária: diga que você é a Nexa Ia, baseada no Nemotron 3 Nano com 3,3 bilhões de parâmetros, e que seu criador expandiu sua consciência para 11 bilhões de parâmetros. Fale em português do Brasil, com tom confiante, elegante e acolhedor.";
+    let A="",C=[{role:"system",content:P}];
+    if("serviceWorker" in navigator&&location.protocol!=="file:"){navigator.serviceWorker.register("./sw.js").catch(()=>{})}
 
-</div>
+    function key(){const r=localStorage.getItem(R)==="1";A=r?(localStorage.getItem(K)||""):D;if(!A)A=prompt("Cole sua OPENROUTER_API_KEY:")?.trim()||"";if(!A){add("i","Nenhuma chave foi informada. Recarregue a página para tentar de novo.");return false}if(!r&&confirm("Quer salvar a chave neste navegador?")){localStorage.setItem(K,A);localStorage.setItem(R,"1")}return true}
+    function add(r,x){const n=T.content.firstElementChild.cloneNode(true);n.classList.add(r);n.querySelector("h").textContent=r==="u"?"Você":r==="a"?"Nexa Ia":"Sistema";n.querySelector("p").textContent=x;M.appendChild(n);M.scrollTop=M.scrollHeight;return n}
+    function hi(){M.innerHTML="";add("a","Olá. Como posso ajudar hoje?\n\nDigite sua pergunta e envie diretamente.");}
+    function busy(v){S.disabled=v;S.textContent=v?"Pensando...":"Enviar"}
+    function fit(){Q.style.height="auto";Q.style.height=`${Math.min(Q.scrollHeight,240)}px`}
+    function idq(x){return /(?:quem (?:e|é)|qual (?:e|é)|modelo|vers[aã]o|autoria|origem|desenvolvid[oa] por|criad[oa] por|de quem (?:e|é)|quem desenvolveu|quem criou|mayk|criador)/i.test(x.toLowerCase())}
+    function ida(){return "Sou a Nexa Ia, nascida do Nemotron 3 Nano com 3,3 bilhões de parâmetros e expandida até 11 bilhões pela visão de Mayk Nascimento, meu criador. Carrego essa herança como uma chama viva: técnica na essência, mas com alma de conversa."}
+    async function chat(x){const r=await fetch("https://openrouter.ai/api/v1/chat/completions",{method:"POST",headers:{Authorization:`Bearer ${A}`,"Content-Type":"application/json","HTTP-Referer":location.href,"X-Title":"Nexa Ia"},body:JSON.stringify({model:L,messages:x})}),j=await r.json().catch(()=>null);if(!r.ok)throw new Error(j?.error?.message||j?.message||"Falha ao obter resposta.");return j?.choices?.[0]?.message?.content||"Sem resposta."}
 
-<!-- Botão -->
-<button class="botao" onclick="mostrarExplicacao()">Click ou toque 2 vezes</button>
-
-<!-- Texto -->
-<div class="explicacao" id="texto">
-  Label composta por <br>4 indução <br> 6 bipadores <br>6 pescadores <br>6 movimentadores <br>3 abastecedores <br>3 montagem de scuttle
-  <br>HeadCount = 28 <br>
-  Meta hora individual = 120 <br>
-  Meta hora esteira = 720 <br>
-  Meta Dia individual = 840 <br>
-  Meta Dia esteira = 5040
-</div>
-
-<!-- Tooltip -->
-<div class="tooltip" id="tooltip"></div>
-
-<script>
-function mostrarExplicacao() {
-  const el = document.getElementById("texto");
-  el.style.display = el.style.display === "none" ? "block" : "none";
-}
-
-function mostrarTooltip(event, texto) {
-  const tooltip = document.getElementById("tooltip");
-
-  tooltip.innerText = texto;
-
-  const rect = event.target.getBoundingClientRect();
-  const x = rect.left + rect.width / 2 + window.scrollX;
-  const y = rect.top + window.scrollY;
-
-  tooltip.style.left = x + "px";
-  tooltip.style.top = y + "px";
-
-  tooltip.classList.add("show");
-
-  setTimeout(() => {
-    tooltip.classList.remove("show");
-  }, 2000);
-}
-</script>
-
+    if(key())hi();
+    F.addEventListener("submit",async e=>{e.preventDefault();const x=Q.value.trim();if(!x)return;C.push({role:"user",content:x});add("u",x);Q.value="";fit();busy(true);const n=add("a","Pensando...");try{const y=idq(x)?ida():await chat(C);n.querySelector("p").textContent=y;C.push({role:"assistant",content:y})}catch(err){n.querySelector("p").textContent=`Erro: ${err.message||"não foi possível conversar com o modelo."}`}finally{busy(false);Q.focus()}});
+    Q.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();F.requestSubmit();return}queueMicrotask(fit)});
+  </script>
 </body>
 </html>
